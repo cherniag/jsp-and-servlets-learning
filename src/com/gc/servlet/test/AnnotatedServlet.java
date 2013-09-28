@@ -1,6 +1,8 @@
 package com.gc.servlet.test;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,9 +14,20 @@ public class AnnotatedServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("AnnotatedServlet.doGet()");
-		response.getWriter().println("<h2>AnnotatedServlet servlet</h2>");
-		response.getWriter().close();
+		String userId = request.getParameter("userId");
+		response.setContentType("text/html");
+		PrintWriter writer = response.getWriter();
+		writer.println("<h1>");
+		writer.println("Hello "+userId+" from the get");
+		writer.println("</h1>");
+	}
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String userId = request.getParameter("userId");
+		response.setContentType("text/html");
+		PrintWriter writer = response.getWriter();
+		writer.println("<h1>");
+		writer.println("Hello "+userId+" from the post");
+		writer.println("</h1>");
 	}
 
 }
