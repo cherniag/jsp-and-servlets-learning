@@ -11,6 +11,10 @@
 	<servlet>
 		<servlet-name>XmlServlet</servlet-name>
 		<servlet-class>com.gc.servlet.test.XmlServlet</servlet-class>
+		<init-param>
+			<param-name>defaultUserId</param-name>
+			<param-value>John Smith</param-value>
+		</init-param>
 	</servlet>
 
 	<servlet-mapping>

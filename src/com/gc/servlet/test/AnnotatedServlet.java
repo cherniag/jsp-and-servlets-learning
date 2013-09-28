@@ -5,7 +5,9 @@ import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Enumeration;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -13,7 +15,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet("/AnnotatedServletPath")
+@WebServlet(
+		urlPatterns={"/AnnotatedServletPath"},
+		initParams={
+				@WebInitParam(name="defaultUserId", value="Jonh Smith")
+		}
+)
 public class AnnotatedServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -24,32 +31,39 @@ public class AnnotatedServlet extends HttpServlet {
 		
 		String userId = request.getParameter("userId");
 		HttpSession httpSession = request.getSession();
+		ServletContext servletContext = request.getServletContext();
 		if(userId!=null && !userId.isEmpty()){
 			httpSession.setAttribute("savedUserId", userId);
+			servletContext.setAttribute("savedUserId", userId);
 		}
 		response.setContentType("text/html");
 		PrintWriter writer = response.getWriter();
 		writer.println("<h1>");
 		writer.println("<br>Hello " + userId + " from the get");
-		writer.println("<br>Saved is " + httpSession.getAttribute("savedUserId") + " from the get");
+		writer.println("<br>Saved in session is " + httpSession.getAttribute("savedUserId") + " from the get");
+		writer.println("<br>Saved in context is " + servletContext.getAttribute("savedUserId") + " from the get");
+		writer.println("<br>Saved in context as init param is " + getServletConfig().getInitParameter("defaultUserId") + " from the get");
 		writer.println("</h1><br>Cookies:");
-		for(Cookie cookie:request.getCookies()){
-			writer.println(new StringBuilder("<br>")
-				.append("name=").append(cookie.getName())
-				.append(" value=").append(cookie.getValue())
-				.append(" path=").append(cookie.getPath())
-				.append(" maxAge=").append(cookie.getMaxAge())
-				.toString()
-			);
+		if(request.getCookies()!=null){
+			for(Cookie cookie:request.getCookies()){
+				writer.println(new StringBuilder("<br>")
+					.append("name=").append(cookie.getName())
+					.append(" value=").append(cookie.getValue())
+					.append(" path=").append(cookie.getPath())
+					.append(" maxAge=").append(cookie.getMaxAge())
+					.toString()
+				);
+			}
 		}
 		writer.println("<br><br>Headers:");
-		for(Enumeration<String> headers = request.getHeaderNames();headers.hasMoreElements();){
-			String headerName = headers.nextElement();
-			writer.println(new StringBuilder("<br>")
-				.append("name=").append(headerName)
-				.append(" value=").append(request.getHeader(headerName))
-				.toString()
-			);
+		if (request.getHeaderNames()!=null) {
+			for (Enumeration<String> headers = request.getHeaderNames(); headers
+					.hasMoreElements();) {
+				String headerName = headers.nextElement();
+				writer.println(new StringBuilder("<br>").append("name=")
+						.append(headerName).append(" value=")
+						.append(request.getHeader(headerName)).toString());
+			}
 		}
 		writer.println("<br><br>Attributes:");
 		for(Enumeration<String> attrNames = request.getAttributeNames();attrNames.hasMoreElements();){
