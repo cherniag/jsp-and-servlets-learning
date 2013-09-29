@@ -1,39 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-	id="WebApp_ID" version="3.0">
-	<display-name>test.jsp.and.servlets</display-name>
-	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
-	</welcome-file-list>
-	
-	<servlet>
-		<servlet-name>XmlServlet</servlet-name>
-		<servlet-class>com.gc.servlet.test.XmlServlet</servlet-class>
-		<init-param>
-			<param-name>defaultUserId</param-name>
-			<param-value>John Smith</param-value>
-		</init-param>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>XmlServlet</servlet-name>
-		<url-pattern>/XmlServletPath</url-pattern>
-	</servlet-mapping>
-	
-	<!-- Configure JSP as Servlet to specify init param -->
-	<servlet>
-		<servlet-name>InitJSP</servlet-name>
-		<jsp-file>/init.jsp</jsp-file>
-		<init-param>
-			<param-name>defaultUser</param-name>
-			<param-value>John Smith</param-value>
-		</init-param>
-	</servlet>
-	
-	<servlet-mapping>
-		<servlet-name>InitJSP</servlet-name>
-		<url-pattern>/init.jsp</url-pattern>
-	</servlet-mapping>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>test.jsp.and.servlets</display-name>
+  
 </web-app>
